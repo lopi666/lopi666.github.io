@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Игра</title>
+    <style>
+        #board {
+            height: 350px;
+            width: 650px;
+            background-image: url('пр.jpg');
+            border: 100px solid black;
+        }
+        .character {
+            background-image: url('хороший.png');
+            background-size: cover;
+            width: 120px;
+            height: 130px;
+            padding: 13px;
+            margin: 10px;
+            float: left;
+        }
+            .thief {
+                background-image: url('плохой.jpg');
+                background-size: cover;
+            }
+
+
+
+        
+
+            .hidden {
+                display: none;
+            }
+
+            .visible {
+                display: block;
+            }
+
+        
+    </style>
+</head>
+<body>
+    <input type="button"
+         value="Играть" onclick="startGame();">
+      <div id="board">
+        <div class="character"></div>
+        <div class="character"></div>
+        <div class="character"></div>
+        <div class="character"></div>
+        <div class="character"></div>
+        <div class="character"></div>
+      </div>
+      <p id="lopi"></p>
+      <script>
+        function startGame() {
+            gameLoop();
+        }
+
+        var loops = 0;
+        var peopleVisible = false;
+        function gameLoop() {
+            loops++;
+            peopleVisible = !peopleVisible;
+            flashCharacters();
+            characteCharacters();
+           
+            if (loops < 12) {
+                setTimeout(gameLoop, peopleVisible ? 1000 : 2000);
+            } else {
+                alert(" Игра окончена!Ваш счет:" + gameScore);
+                var lopi=document.getElementById('lopi')
+                lopi.innerHTML = " Игра окончена!Ваш счет:" + gameScore;
+            }
+        }
+
+        function flashCharacters() {
+            var board = document.getElementById('board')
+            var classToSet = '';
+            
+            if (peopleVisible) {
+                classToSet = 'character visible';
+            } else {
+                classToSet = 'character hidden';
+            }
+            for (var i = 0; i<6; i++) {
+                board.children[i].className = classToSet;
+            }
+        }
+
+        function characteCharacters() {
+            var board = document.getElementById('board')
+            for(var i = 0; i < 6;i++) {
+                board.children[i].innerHTML = '';
+                board.children[i].onclick = function () {
+                    gameScore = gameScore - 2;
+            }
+        }
+            var randomNumber = Math.floor(Math.random() * 5);
+            board.children[randomNumber].innerHTML = ''
+            board.children[randomNumber].className += ' thief';
+            board.children[randomNumber].onclick = function () {
+                    gameScore = gameScore + 2;
+            }
+            
+            }
+
+      </script>
+</body>
+</html>
